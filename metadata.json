@@ -1,0 +1,15 @@
+{
+  "name": "tut-XcodeCLI",
+  "version": "0.1.0",
+  "author": "Antti Pettinen, IT-Services, Tampere University of Technology",
+  "summary": "Installs Xcode Command Line Tools",
+  "license": "Apache-2.0",
+  "source": "git@tutmac-git.cc.tut.fi:puppet/tut-XcodeCLI.git",
+  "project_page": null,
+  "issues_url": "antti.pettinen@tut.fi",
+  "dependencies": [
+    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
+  ],
+  "data_provider": null
+}
+
