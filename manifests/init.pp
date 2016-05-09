@@ -44,26 +44,50 @@
 #
 # Copyright 2016 Tampere University of Technology
 #
-class XcodeCLI {
-  file { 'set_installondemand':
-    ensure => present,
-    path   =>
-    '/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress',
-    mode   => '0644',
-    owner  => 'root',
-    group  => 'wheel',
-    before => Exec['install_Xcode_CLI_Tools'],
+class XcodeCLI (
+  String $Xcode_dir = '/Applications/Xcode.app',
+  ) {
+  if $::operatingsystem != 'Darwin' {
+    fail('This module is only for OS X machines')
+  }
+  elsif $::operatingsystemmajrelease >= 15 {
+    file { 'set_installondemand':
+      ensure => present,
+      path   =>
+      '/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress',
+      mode   => '0644',
+      owner  => 'root',
+      group  => 'wheel',
+      before => Exec['get_Xcode_CLI_Tools'],
+    }
+# case :xcode_installed | :xcode_cli_installed == false
+    exec { 'get_Xcode_CLI_version':
+      command => '/bin/echo',
+      # path => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
+      # refreshonly => true,
+    }
+
+    exec { 'install_Xcode_CLI_Tools':
+      command => '',
+      # /usr/sbin/softwareupdate
+      #PROD=$(softwareupdate -l | grep "\*.*Command Line" | head -n 1 | awk -F"*" '{print $2}' | sed -e 's/^ *//' | tr -d '\n')
+    # install it
+    #softwareupdate -i "$PROD" -v
+      # path => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
+      # refreshonly => true,
+      require => Exec['get_Xcode_CLI_version'],
+      notify  => File['remove_installondemand'],
+    }
+
+    file { 'remove_installondemand':
+      ensure => absent,
+      path   =>
+      '/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress',
+    }
+
+  }
+  else {
+    fail('This module supports only OS X versions 10.9 or above')
   }
 
-  exec { 'install_Xcode_CLI_Tools':
-    command => '',
-    # path => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
-    # refreshonly => true,
-    notify  => File['remove_installondemand'],
-  }
-
-  file { 'remove_installondemand':
-    ensure => absent,
-    path   => '/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress',
-  }
 }
