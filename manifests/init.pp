@@ -45,44 +45,60 @@
 # Copyright 2016 Tampere University of Technology
 #
 class XcodeCLI (
-  String $Xcode_dir = '/Applications/Xcode.app',
-  ) {
+  String $Xcode_install_script_dir = '/tmp/',
+  )
+  {
   if $::operatingsystem != 'Darwin' {
     fail('This module is only for OS X machines')
   }
   elsif $::operatingsystemmajrelease >= 15 {
-    file { 'set_installondemand':
-      ensure => present,
-      path   =>
-      '/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress',
-      mode   => '0644',
-      owner  => 'root',
-      group  => 'wheel',
-      before => Exec['get_Xcode_CLI_Tools'],
-    }
-# case :xcode_installed | :xcode_cli_installed == false
-    exec { 'get_Xcode_CLI_version':
-      command => '/bin/echo',
-      # path => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
-      # refreshonly => true,
-    }
+    if $::xcode_cli_installed == 'false' {
+      # installing Xcode Command Line Tools from SUS specified source
+      file { 'set_installondemand':
+        ensure => present,
+        path   =>
+        '/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress',
+        mode   => '0644',
+        owner  => 'root',
+        group  => 'wheel',
+        before => Exec['install_Xcode_CLI_Tools'],
+      }
 
-    exec { 'install_Xcode_CLI_Tools':
-      command => '',
-      # /usr/sbin/softwareupdate
-      #PROD=$(softwareupdate -l | grep "\*.*Command Line" | head -n 1 | awk -F"*" '{print $2}' | sed -e 's/^ *//' | tr -d '\n')
-    # install it
-    #softwareupdate -i "$PROD" -v
-      # path => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
-      # refreshonly => true,
-      require => Exec['get_Xcode_CLI_version'],
-      notify  => File['remove_installondemand'],
-    }
+      file { 'xcode_cli_install_script':
+        ensure => file,
+        source => 'puppet:///modules/XcodeCLI/install_xcode_cli_tools.sh',
+        path   => '/tmp/install_xcode_cli_tools.sh'
+        mode   => '0700',
+        owner  => 'root',
+        group  => 'wheel',
+        notify => Exec['install_Xcode_CLI_Tools'],
+      }
 
-    file { 'remove_installondemand':
-      ensure => absent,
-      path   =>
-      '/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress',
+      exec { 'install_Xcode_CLI_Tools':
+        command => '',
+        # /usr/sbin/softwareupdate
+        #PROD=$(softwareupdate -l | grep "\*.*Command Line" | head -n 1 | awk -F"*" '{print $2}' | sed -e 's/^ *//' | tr -d '\n')
+      # install it
+      #softwareupdate -i "$PROD" -v
+        # path => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
+        # refreshonly => true,
+        #require => Exec['get_Xcode_CLI_version'],
+        require => File['set_installondemand'],
+        notify  => File['remove_installondemand'],
+      }
+
+      file { 'remove_installondemand':
+        ensure => absent,
+        path   =>
+        '/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress',
+      }
+
+      file { 'remove_xcode_cli_install_script':
+        ensure => absent,
+        path   => ''
+      }
+
+
     }
 
   }

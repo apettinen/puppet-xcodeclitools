@@ -8,8 +8,18 @@
   "project_page": null,
   "issues_url": "antti.pettinen@tut.fi",
   "dependencies": [
-    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
+    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"},
+    {"name":"CFPropertyList gem","version_requirement":">=2.2.5"}
   ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "OS X (Darwin)",
+      "operatingsystemrelease": [
+        "10.9",
+        "10.10",
+        "10.11"
+      ]
+    }
+  ]
   "data_provider": null
 }
-
