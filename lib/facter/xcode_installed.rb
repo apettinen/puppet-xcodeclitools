@@ -11,7 +11,7 @@ require 'facter'
 Facter.add(:xcode_installed) do
   confine :kernel => 'Darwin'
   setcode do
-    if Facter.value(:xcode_version)
+    if Facter.value(:xcode_version) #!= nil
       'true'
     else
       'false'

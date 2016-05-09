@@ -45,14 +45,14 @@
 # Copyright 2016 Tampere University of Technology
 #
 class XcodeCLI (
-  String $Xcode_install_script_dir = '/tmp/',
+  String $xcode_install_script_dir = '/tmp',
   )
   {
   if $::operatingsystem != 'Darwin' {
     fail('This module is only for OS X machines')
   }
   elsif $::operatingsystemmajrelease >= 15 {
-    if $::xcode_cli_installed == 'false' {
+    if $::xcode_cli_installed == false {
       # installing Xcode Command Line Tools from SUS specified source
       file { 'set_installondemand':
         ensure => present,
@@ -67,7 +67,7 @@ class XcodeCLI (
       file { 'xcode_cli_install_script':
         ensure => file,
         source => 'puppet:///modules/XcodeCLI/install_xcode_cli_tools.sh',
-        path   => '/tmp/install_xcode_cli_tools.sh'
+        path   => "${xcode_install_script_dir}/install_xcode_cli_tools.sh"
         mode   => '0700',
         owner  => 'root',
         group  => 'wheel',
@@ -75,30 +75,29 @@ class XcodeCLI (
       }
 
       exec { 'install_Xcode_CLI_Tools':
-        command => '',
-        # /usr/sbin/softwareupdate
-        #PROD=$(softwareupdate -l | grep "\*.*Command Line" | head -n 1 | awk -F"*" '{print $2}' | sed -e 's/^ *//' | tr -d '\n')
-      # install it
-      #softwareupdate -i "$PROD" -v
-        # path => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
-        # refreshonly => true,
-        #require => Exec['get_Xcode_CLI_version'],
-        require => File['set_installondemand'],
-        notify  => File['remove_installondemand'],
+        command => "${xcode_install_script_dir}/install_xcode_cli_tools.sh",
+        require => [
+                    File['set_installondemand'],
+                    File['xcode_cli_install_script'],
+                    ],
+        notify  => [
+                    File['remove_installondemand'],
+                    File['remove_xcode_cli_install_script'],
+                    ],
       }
 
       file { 'remove_installondemand':
-        ensure => absent,
-        path   =>
+        ensure    => absent,
+        path      =>
         '/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress',
+        subscribe => Exec['install_Xcode_CLI_Tools'],
       }
 
       file { 'remove_xcode_cli_install_script':
-        ensure => absent,
-        path   => ''
+        ensure    => absent,
+        path      => "${xcode_install_script_dir}/install_xcode_cli_tools.sh",
+        subscribe => Exec['install_Xcode_CLI_Tools'],
       }
-
-
     }
 
   }
