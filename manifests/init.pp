@@ -50,7 +50,7 @@ class xcodeclitools (
   #if $::xcode_cli_installed == false {
     # installing Xcode Command Line Tools from SUS specified source
     file { 'set_installondemand':
-      ensure => present,
+      ensure => file,
       path   =>
       '/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress',
       mode   => '0644',
