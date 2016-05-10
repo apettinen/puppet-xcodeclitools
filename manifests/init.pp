@@ -75,10 +75,10 @@ class xcodeclitools (
                   File['set_installondemand'],
                   File['xcode_cli_install_script'],
                   ],
-      notify  => [
-                  File['remove_installondemand'],
-                  File['remove_xcode_cli_install_script'],
-                  ],
+      # notify  => [
+      #             File['remove_installondemand'],
+      #             File['remove_xcode_cli_install_script'],
+      #             ],
     }
     xcodeclitools::remove_helpers {'remove_helper_files':
       subscribe => Exec['install_Xcode_CLI_Tools']
