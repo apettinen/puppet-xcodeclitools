@@ -1,4 +1,4 @@
-# XcodeCLI
+# xcodeclitools
 
 #### Table of Contents
 

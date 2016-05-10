@@ -1,4 +1,4 @@
-# Class: XcodeCLI
+# Class: xcodecli
 # ===========================
 #
 # Install XCode Command Line Tools. Compatible with OS X versions 10.9 - 10.11
@@ -25,7 +25,7 @@
 # --------
 #
 # @example
-#    class { 'XcodeCLI':
+#    class { 'xcodecli':
 #
 #    }
 #
@@ -39,10 +39,10 @@
 #
 # Copyright 2016 Tampere University of Technology
 #
-class XcodeCLI (
-  String $xcode_install_script_dir = '/tmp',
-  )
-  {
+
+class xcodeclitools (
+  String $xcode_install_script_dir = '/tmp'
+  ) {
   if $::operatingsystem != 'Darwin' {
     fail('This module is only for OS X machines')
   }
@@ -61,8 +61,8 @@ class XcodeCLI (
 
     file { 'xcode_cli_install_script':
       ensure => file,
-      source => 'puppet:///modules/XcodeCLI/install_xcode_cli_tools.sh',
-      path   => "${xcode_install_script_dir}/install_xcode_cli_tools.sh"
+      source => 'puppet:///modules/xcodeclitools/install_xcode_cli_tools.sh',
+      path   => "${xcode_install_script_dir}/install_xcode_cli_tools.sh",
       mode   => '0700',
       owner  => 'root',
       group  => 'wheel',
@@ -98,5 +98,4 @@ class XcodeCLI (
   else {
     fail('This module supports only OS X versions 10.9 or above')
   }
-
 }
