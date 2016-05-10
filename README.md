@@ -22,7 +22,7 @@ Xcode CLI tools are expected to be found via pkgutil and Xcode is expected to be
 
 ## Setup
 
-### What XcodeCLI affects **OPTIONAL**
+### What XcodeCLI affects
 
 This module will install a new fact, xcodecli_installed. The fact
 <!--
@@ -37,7 +37,7 @@ If there's more that they should know about, though, this is the place to mentio
 * Dependencies that your module automatically installs.
 * Warnings or other important notices. -->
 
-### Setup Requirements **OPTIONAL**
+### Setup Requirements
 
 Requires Apple SUS to be configured properly. If you don't know how to configure it, don't worry, the Apple defaults will work just fine.
 

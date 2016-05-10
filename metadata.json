@@ -1,5 +1,5 @@
 {
-  "name": "tut-XcodeCLI",
+  "name": "XcodeCLI",
   "version": "0.1.0",
   "author": "Antti Pettinen, IT-Services, Tampere University of Technology",
   "summary": "Installs Xcode Command Line Tools",
