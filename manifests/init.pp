@@ -1,4 +1,4 @@
-# Class: xcodecli
+# Class: xcodeclitools
 # ===========================
 #
 # Install XCode Command Line Tools. Compatible with OS X versions 10.9 - 10.11
@@ -25,7 +25,7 @@
 # --------
 #
 # @example
-#    class { 'xcodecli':
+#    class { 'xcodeclitools':
 #
 #    }
 #
@@ -50,7 +50,7 @@ class xcodeclitools (
   #if $::xcode_cli_installed == false {
     # installing Xcode Command Line Tools from SUS specified source
     file { 'set_installondemand':
-      ensure => file,
+      ensure => present,
       path   =>
       '/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress',
       mode   => '0644',
@@ -80,19 +80,21 @@ class xcodeclitools (
                   File['remove_xcode_cli_install_script'],
                   ],
     }
-
-    file { 'remove_installondemand':
-      ensure    => absent,
-      path      =>
-      '/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress',
-      subscribe => Exec['install_Xcode_CLI_Tools'],
+    xcodeclitools::remove_helpers {'remove_helper_files':
+      subscribe => Exec['install_Xcode_CLI_Tools']
     }
-
-    file { 'remove_xcode_cli_install_script':
-      ensure    => absent,
-      path      => "${xcode_install_script_dir}/install_xcode_cli_tools.sh",
-      subscribe => Exec['install_Xcode_CLI_Tools'],
-    }
+    # file { 'remove_installondemand':
+    #   ensure    => absent,
+    #   path      =>
+    #   '/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress',
+    #   subscribe => Exec['install_Xcode_CLI_Tools'],
+    # }
+    #
+    # file { 'remove_xcode_cli_install_script':
+    #   ensure    => absent,
+    #   path      => "${xcode_install_script_dir}/install_xcode_cli_tools.sh",
+    #   subscribe => Exec['install_Xcode_CLI_Tools'],
+    # }
   #}
   }
   else {
