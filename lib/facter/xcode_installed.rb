@@ -16,4 +16,5 @@ Facter.add(:xcode_installed) do
     else
       'false'
     end
+  end
 end
