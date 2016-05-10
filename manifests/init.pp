@@ -97,6 +97,9 @@ class xcodeclitools (
     # }
   #}
   }
+  elsif $::xcode_cli_installed == 'true' {
+    notify('Xcode Command Line Tools is installed')
+  }
   else {
     fail('This module supports only OS X versions 10.9 or above')
   }
