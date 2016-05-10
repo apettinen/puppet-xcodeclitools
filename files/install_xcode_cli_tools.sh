@@ -8,3 +8,4 @@
 PROD=$(/usr/sbin/softwareupdate -l | /usr/bin/sed '/\* Command Line Tools/!d;s/*//;s/^[ \t]*//;s/[ \t]*$//;s/\n//g;q')
 # install it
 /usr/sbin/softwareupdate -i "$PROD" -v
+exit 0
