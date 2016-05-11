@@ -39,7 +39,7 @@ class xcodeclitools (
   if $::operatingsystem != 'Darwin' {
     fail('This module is only for OS X machines')
   }
-  elsif $::operatingsystemmajrelease >= '15' and $::xcode_cli_installed == 'false' {
+  elsif $::operatingsystemmajrelease >= '15' and $::xcode_cli_installed == false {
   #if $::xcode_cli_installed == false {
     # installing Xcode Command Line Tools from SUS specified source
     file { 'set_installondemand':
@@ -73,7 +73,7 @@ class xcodeclitools (
     xcodeclitools::remove_helpers {'remove_helper_files':
     }
   }
-  elsif $::xcode_cli_installed == 'true' {
+  elsif $::xcode_cli_installed == true {
     #notice('Xcode Command Line Tools is installed')
   }
   else {

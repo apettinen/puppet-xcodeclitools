@@ -9,12 +9,12 @@ Facter.add(:xcode_cli_installed) do
   confine :kernel => 'Darwin'
   setcode do
     clitools_receipt = Facter::Util::Resolution.exec('/usr/sbin/pkgutil --pkgs=com.apple.pkg.CLTools_Executables 2>/dev/null')
-    if Facter.value(:xcode_installed) == 'true'
-      'true'
+    if Facter.value(:xcode_installed) == true
+      true
     elsif clitools_receipt == 'com.apple.pkg.CLTools_Executables'
-      'true'
+      true
     else
-      'false'
+      false
     end
   end
 end
