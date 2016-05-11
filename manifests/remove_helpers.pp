@@ -17,6 +17,7 @@
 define xcodeclitools::remove_helpers (
   String $script_dir = $xcodeclitools::xcode_install_script_dir
   ) {
+  validate_string($script_dir)
   # file { 'remove_installondemand':
   #   ensure => absent,
   #   path   =>
@@ -31,7 +32,8 @@ define xcodeclitools::remove_helpers (
   # }
   exec { 'remove_installondemand':
     command => 'rm /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress',
-    path    => '/bin'
+    path    => '/bin',
+    #require =>  File['xcodeclitools::set_installondemand']
   }
   exec { 'remove_xcode_cli_install_script':
     command => "rm ${script_dir}/install_xcode_cli_tools.sh",
