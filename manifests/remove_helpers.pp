@@ -1,8 +1,14 @@
-# Class: xcodeclitools::remove_helpers
+# Define: xcodeclitools::remove_helpers
 # ===========================
 #
-# Removes install_xcode_cli_tools.sh and
-# /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress files
+# Defined resource/type which removes install_xcode_cli_tools.sh and
+# .com.apple.dt.CommandLineTools.installondemand.in-progress -files
+#
+# Variables
+# ---------
+# * `script_dir`
+# Directory where Xcode install script is located
+# Defaults to `$xcodeclitools::xcode_install_script_dir`
 #
 # Authors
 # -------

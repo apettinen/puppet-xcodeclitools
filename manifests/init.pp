@@ -12,15 +12,6 @@
 #  sets the directory where Xcode install script is temporarily stored.
 # Defaults to /tmp, could also be /usr/local/
 #
-# Variables
-# ----------
-#
-# Here you should define a list of variables that this module would require.
-#
-# * `xcode_install_script_dir`
-#  sets the directory where Xcode install script is temporarily stored.
-# Defaults to /tmp, could also be /usr/local/
-#
 # Examples
 # --------
 #
@@ -80,25 +71,7 @@ class xcodeclitools (
       before  => Xcodeclitools::Remove_helpers['remove_helper_files'],
     }
     xcodeclitools::remove_helpers {'remove_helper_files':
-      #subscribe => Exec['install_Xcode_CLI_Tools']
-      # require => [
-      #             File['set_installondemand'],
-      #             File['xcode_cli_install_script'],
-      #             ],
     }
-    # file { 'remove_installondemand':
-    #   ensure    => absent,
-    #   path      =>
-    #   '/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress',
-    #   subscribe => Exec['install_Xcode_CLI_Tools'],
-    # }
-    #
-    # file { 'remove_xcode_cli_install_script':
-    #   ensure    => absent,
-    #   path      => "${xcode_install_script_dir}/install_xcode_cli_tools.sh",
-    #   subscribe => Exec['install_Xcode_CLI_Tools'],
-    # }
-  #}
   }
   elsif $::xcode_cli_installed == 'true' {
     #notice('Xcode Command Line Tools is installed')
