@@ -4,7 +4,7 @@
   "author": "Antti Pettinen, IT-Services, Tampere University of Technology",
   "summary": "Installs Xcode Command Line Tools",
   "license": "Apache-2.0",
-  "source": "git@tutmac-git.cc.tut.fi:puppet/tut-XcodeCLI.git",
+  "source": "git@github.com:apettinen/puppet-xcodeclitools.git",
   "project_page": null,
   "issues_url": "antti.pettinen@tut.fi",
   "dependencies": [
