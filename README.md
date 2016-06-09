@@ -24,7 +24,11 @@ Xcode CLI tools are expected to be found via pkgutil and Xcode is expected to be
 
 ### What XcodeCLI affects
 
-This module will install a new fact, xcodecli_installed. The fact
+This module will install XCode Command Line Tools. Additionally, the module introduces the following new facts:
+- xcode_installed
+- xcode_version
+- xcode_cli_installed
+
 <!--
 If it's obvious what your module touches, you can skip this section. For
 example, folks can probably figure out that your mysql_instance module affects
