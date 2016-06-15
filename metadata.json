@@ -1,11 +1,11 @@
 {
-  "name": "xcodeclitools",
+  "name": "apettinen-xcodeclitools",
   "version": "0.1.0",
   "author": "Antti Pettinen, IT-Services, Tampere University of Technology",
   "summary": "Installs Xcode Command Line Tools",
   "license": "Apache-2.0",
   "source": "git@github.com:apettinen/puppet-xcodeclitools.git",
-  "project_page": null,
+  "project_page": "https://github.com/apettinen/puppet-xcodeclitools",
   "issues_url": "antti.pettinen@tut.fi",
   "dependencies": [
     {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"},
@@ -13,13 +13,14 @@
   ],
   "operatingsystem_support": [
     {
-      "operatingsystem": "OS X (Darwin)",
+      "operatingsystem": "macOS (Darwin)",
       "operatingsystemrelease": [
         "10.9",
         "10.10",
-        "10.11"
+        "10.11",
+        "10.12"
       ]
     }
-  ]
+  ],
   "data_provider": null
 }
